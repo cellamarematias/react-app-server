@@ -2,11 +2,10 @@ import Joi from 'Joi';
 
 const usersValidation = (req, res, next) => {
   const conditions = Joi.object({
-    tasks: Joi.array(),
+    _id: Joi.string().required(),
     fullName: Joi.string().min(3).max(200).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
-    date: Joi.date(),
+    email: Joi.string().min(3).max(200).required(),
+    couples: Joi.array(),
   });
   const validationUsers = conditions.validate(req.body);
   if (validationUsers.error) {

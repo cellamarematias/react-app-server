@@ -7,8 +7,11 @@ const router = express.Router();
 // set the endpoints
 router
     .get('/', usersController.getAllUsers)
+    .get('/:id', usersController.getUser)
     .post('/', usersValidation.usersValidation, usersController.createUser)
     .put('/:id', usersValidation.usersValidation, usersController.editUser )
+    .patch('/:id', usersController.addCouple)
     .delete('/:id', usersController.deleteUser)
+    .delete('/couples/:id', usersController.deleteCouple);
 
 export default router;

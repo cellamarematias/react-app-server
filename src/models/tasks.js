@@ -4,15 +4,10 @@ const { Schema } = mongoose;
 
 const tasksSchema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: false,
     ref: 'Users',
   },
-//   projectId: {
-//     type: Schema.Types.ObjectId,
-//     required: true,
-//     ref: 'Project',
-//   },
   title: {
     type: String,
     required: true,
@@ -27,8 +22,12 @@ const tasksSchema = new Schema({
     require: true
 },
   done: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: 'pending',
+    required: true,
+  },
+  uid: {
+    type: String,
     required: true,
   },
 });

@@ -3,6 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import 'dotenv/config';
 import router from "./src/routes/index.js";
+import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +12,9 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
+// use cross-origin resource sharing
+app.use(cors());
+
 
 // conexion a DB MONGO
 const url = `mongodb+srv://matias:${ process.env.PASSWORD}@cluster0.pzons.mongodb.net/${ process.env.DBNAME}?retryWrites=true&w=majority`;  //URL de conexión

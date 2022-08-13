@@ -1,13 +1,12 @@
-import TasksModel from '../models/tasks.js';
+import Expenses from "../models/expenses.js";
 
-const getTasks = async (req, res) => {
+const getexpenses = async (req, res) => {
   try {
-    const tasks = await TasksModel.find({})
+    const expenses = await Expenses.find({})
       .populate('user');
-    //   .populate('projectId');
     return res.status(200).json({
-      message: 'Request Successful. All tasks.',
-      data: tasks,
+      message: 'Request Successful. All expenses.',
+      data: expenses,
       error: false,
     });
   } catch (error) {
@@ -19,14 +18,15 @@ const getTasks = async (req, res) => {
   }
 };
 
-const findTask = async (req, res) => {
+
+
+const findexpense = async (req, res) => {
   try {
-    const taskById = await TasksModel.findById(req.params.id)
+    const taskById = await Expenses.findById(req.params.id)
       .populate('user')
-    //   .populate('projectId');
     if (taskById) {
       return res.status(200).json({
-        message: (`Request Successful. Task with Id: ${req.params.id} found.`),
+        message: (`Request Successful. expense with Id: ${req.params.id} found.`),
         data: taskById,
         error: false,
       });
@@ -45,41 +45,43 @@ const findTask = async (req, res) => {
   }
 };
 
-const createTask = async (req, res) => {
+const createexpense = async (req, res) => {
   try {
-    const newTask = new TasksModel({
-      user: req.body.user,
-      title: req.body.title,
-      description: req.body.description,
-      date: req.body.date,
-      done: req.body.done,
-      uid: req.body.uid,
+    const newexpense = new Expenses({
+        description: req.body.description,
+        amount: req.body.amount,
+        date: req.body.date,
+        user: req.body.user,
+        coupleId: req.body.coupleId,
+        status: req.body.status,
+
     });
-    const saveTask = await newTask.save();
+    const saveexpense = await newexpense.save();
+    const data = await Expenses.findById(saveexpense._id)
+      .populate('user');
     return res.status(201).json({
-      message: 'Task Added',
-      data: saveTask,
+      message: 'expense Added',
+      data: data,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'Error during the creation',
+      message: 'Error during the expense creation',
       data: error,
       error: true,
     });
   }
 };
 
-const editTask = async (req, res) => {
+const editexpense = async (req, res) => {
   const { id } = req.params;
   try {
-    const modifiedTask = await TasksModel.findByIdAndUpdate(id, req.body, { new: true })
+    const editedexpense = await Expenses.findByIdAndUpdate(id, req.body, { new: true })
       .populate('user')
-    //   .populate('projectId');
-    if (modifiedTask) {
+    if (editedexpense) {
       return res.status(200).json({
-        message: 'Task Modified',
-        data: modifiedTask,
+        message: 'expense edited',
+        data: editedexpense,
         error: false,
       });
     }
@@ -90,32 +92,32 @@ const editTask = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'Error during the edition',
+      message: 'Error during the expense edition',
       data: error,
       error: true,
     });
   }
 };
 
-const deleteTask = async (req, res) => {
+const deleteexpense = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleteTaskById = await TasksModel.findByIdAndDelete(id);
-    if (deleteTaskById) {
+    const deletedexpense = await Expenses.findByIdAndDelete(id);
+    if (deletedexpense) {
       return res.status(200).json({
-        message: 'Task Deleted',
-        data: deleteTaskById,
+        message: 'expense Deleted',
+        data: deletedexpense,
         error: false,
       });
     }
     return res.status(404).json({
-      message: `Task with id: ${id} not found`,
+      message: `expense with id: ${id} not found`,
       data: undefined,
       error: true,
     });
   } catch (error) {
     return res.status(400).json({
-      message: 'Error during the deletion',
+      message: 'Error during the expense deletion',
       data: error,
       error: true,
     });
@@ -123,9 +125,9 @@ const deleteTask = async (req, res) => {
 };
 
 export default {
-    getTasks,
-    findTask,
-    editTask,
-    deleteTask,
-    createTask
+    getexpenses,
+    findexpense,
+    createexpense,
+    editexpense,
+    deleteexpense,
 }

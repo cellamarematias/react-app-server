@@ -6,6 +6,7 @@ const coupleValidation = (req, res, next) => {
     userOne: Joi.string().required(),
     userTwo: Joi.string(),
     balance: Joi.number(),
+    default: Joi.boolean(),
   });
   const validateCouple = conditions.validate(req.body);
   if (validateCouple.error) {

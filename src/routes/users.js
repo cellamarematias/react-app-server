@@ -8,6 +8,7 @@ const router = express.Router();
 router
     .get('/', usersController.getAllUsers)
     .get('/:id', usersController.getUser)
+    .get('/email/:email', usersController.findUserByEmail)
     .post('/', usersValidation.usersValidation, usersController.createUser)
     .put('/:id', usersValidation.usersValidation, usersController.editUser )
     .patch('/:id', usersController.addCouple)

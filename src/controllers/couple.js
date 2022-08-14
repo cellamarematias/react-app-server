@@ -1,19 +1,21 @@
 import Couple from "../models/couples.js";
 
 const getCouples = async (req, res) => {
+  const { user } = req.params;
   try {
-    const couples = await Couple.find({})
+    const couples = await Couple.find({
+      $or:[
+        {'userOne':user}, {'userTwo':user}
+      ]})
     .populate({
-      path: 'user',
+      path: 'userOne',
       model: 'Users',
     })
     .populate({
-      path: 'expenses',
-      populate: {
-        path: 'user',
+        path: 'userTwo',
         model: 'Users',
       },
-    });
+    );
     return res.status(200).json({
       message: 'Request Successful. All couples.',
       data: couples,
@@ -29,19 +31,22 @@ const getCouples = async (req, res) => {
 };
 
 const findCouple = async (req, res) => {
+  console.log(req.params.id);
   try {
     const couple = await Couple.findById(req.params.id)
-    .populate({
-      path: 'expenses',
-      populate: {
-        path: 'user',
-        model: 'User',
-      },
-    })
+      .populate({
+        path: 'userOne',
+        model: 'Users',
+      })
+      .populate({
+          path: 'userTwo',
+          model: 'Users',
+        },
+      );
     if (couple) {
       return res.status(200).json({
         message: (`Request Successful. Couple with Id: ${req.params.id} found.`),
-        data: couple,
+        data: [couple],
         error: false,
       });
     }
@@ -63,8 +68,9 @@ const createCouple = async (req, res) => {
   try {
     const NewCouple = new Couple({
         name: req.body.name,
-        users: req.body.users,
-        expenses: req.body.expenses,
+        userOne: req.body.userOne,
+        userTwo: req.body.userTwo,
+        default: req.body.default,
     });
     const saveCouple = await NewCouple.save();
     return res.status(201).json({
@@ -86,12 +92,14 @@ const editCouple = async (req, res) => {
   try {
     const editedCouple = await Couple.findByIdAndUpdate(id, req.body, { new: true })
     .populate({
-      path: 'expenses',
-      populate: {
-        path: 'user',
-        model: 'User',
-      },
+      path: 'userOne',
+      model: 'Users',
     })
+    .populate({
+        path: 'userTwo',
+        model: 'Users',
+      },
+    );
     if (editedCouple) {
       return res.status(200).json({
         message: 'Couple Modified',

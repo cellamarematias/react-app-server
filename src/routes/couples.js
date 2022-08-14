@@ -6,8 +6,8 @@ const router = express.Router();
 
 // set the endpoints
 router
-    .get('/', coupleController.getCouples)
-    .get('/:id', coupleController.findCouple)
+    .get('/:user', coupleController.getCouples)
+    .get('/byId/:id', coupleController.findCouple)
     .post('/', coupleValidation.coupleValidation, coupleController.createCouple)
     .put('/:id', coupleValidation.coupleValidation, coupleController.editCouple)
     .patch('/:id', coupleController.pushExpense)

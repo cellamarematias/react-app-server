@@ -43,6 +43,30 @@ const getUser = async (req, res) => {
     }
 };
 
+const findUserByEmail = async (req, res) => {
+    try {
+        const user = await User.findOne({ "email": req.params.email});
+        if (user) {
+            return res.status(200).json({
+                message: `User with email: ${req.params.email} found.`,
+                data: user,
+                error: false,
+            });
+        }
+        return res.status(404).json({
+            message: `User with email: ${req.params.email} doesn't exist.`,
+            data: undefined,
+            error: true,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: `An error has ocurred: ${error}`,
+            data: undefined,
+            error: true,
+        });
+    }
+}
+
 const createUser = async (req, res) => {
     try {
         const newUser = new User({
@@ -181,4 +205,5 @@ export default {
     deleteUser,
     addCouple,
     deleteCouple,
+    findUserByEmail
 }

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // set the endpoints
 router
-    .get('/', expensesController.getexpenses)
+    .get('/byCouple/:couple', expensesController.getexpenses)
     .get('/:id', expensesController.findexpense)
     .post('/', expenseValidation.expenseValidation, expensesController.createexpense)
     .put('/:id', expenseValidation.expenseValidation, expensesController.editexpense)

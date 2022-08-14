@@ -2,11 +2,11 @@ import Joi from 'Joi';
 
 const expenseValidation = (req, res, next) => {
   const conditions = Joi.object({
-    name: Joi.string().min(3).max(50).required(),
-    user: Joi.string().required(),
-    amount: Joi.number().required(),
-    date: Joi.date().required(),
     coupleId: Joi.string().required(),
+    userId: Joi.string().required(),
+    amount: Joi.number().required(),
+    name: Joi.string().min(3).max(50).required(),
+    date: Joi.date().required(),
   });
   const validationexpense = conditions.validate(req.body);
   if (validationexpense.error) {

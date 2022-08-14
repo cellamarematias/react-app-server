@@ -3,22 +3,22 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const expensesSchema = new Schema({
-    couple: {
+    coupleId: {
         type: String,
         required: true,
         ref: 'Couples',
     },
-    user: {
+    userId: {
         type: String,
         required: true,
         ref: 'Users',
     },
-    name: {
-        type: String,
-        required: true,
-    },
     amount: {
         type: Number,
+        required: true,
+    },
+    name: {
+        type: String,
         required: true,
     },
     date: {

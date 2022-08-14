@@ -1,9 +1,10 @@
 import Expenses from "../models/expenses.js";
 
 const getexpenses = async (req, res) => {
+  const { couple } = req.params;
   try {
-    const expenses = await Expenses.find({})
-      .populate('user');
+    const expenses = await Expenses.find({ "coupleId": couple })
+      .populate('userId');
     return res.status(200).json({
       message: 'Request Successful. All expenses.',
       data: expenses,
@@ -48,17 +49,16 @@ const findexpense = async (req, res) => {
 const createexpense = async (req, res) => {
   try {
     const newexpense = new Expenses({
-        description: req.body.description,
-        amount: req.body.amount,
-        date: req.body.date,
-        user: req.body.user,
         coupleId: req.body.coupleId,
-        status: req.body.status,
-
+        userId: req.body.userId,
+        amount: req.body.amount,
+        name: req.body.name,
+        date: req.body.date,
     });
     const saveexpense = await newexpense.save();
     const data = await Expenses.findById(saveexpense._id)
-      .populate('user');
+      .populate('userId');
+    console.log(data);
     return res.status(201).json({
       message: 'expense Added',
       data: data,
@@ -77,7 +77,7 @@ const editexpense = async (req, res) => {
   const { id } = req.params;
   try {
     const editedexpense = await Expenses.findByIdAndUpdate(id, req.body, { new: true })
-      .populate('user')
+      .populate('userId')
     if (editedexpense) {
       return res.status(200).json({
         message: 'expense edited',

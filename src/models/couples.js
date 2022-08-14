@@ -14,13 +14,18 @@ const couplesSchema = new Schema({
     },
     userTwo: {
         type: String,
-        required: true,
+        required: false,
         ref: 'Users',
     },
     balance: {
         type: Number,
         default: 0,
         required: true,
+    },
+    default: {
+        type: Boolean,
+        required: false,
+        unique: true,
     },
 });
 

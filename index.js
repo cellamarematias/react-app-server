@@ -8,14 +8,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
-// use cross-origin resource sharing
-app.use(cors());
-
-
 // conexion a DB MONGO
 const url = `mongodb+srv://matias:${ process.env.PASSWORD}@cluster0.pzons.mongodb.net/${ process.env.DBNAME}?retryWrites=true&w=majority`;  //URL de conexión
 
@@ -27,6 +19,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.get('/', async (req, res) => {
     res.send('Mati app server');
 });

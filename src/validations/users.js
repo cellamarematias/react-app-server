@@ -1,11 +1,11 @@
-import Joi from 'Joi';
+import joi from '../../../node_modules/joi/lib/index.js';
 
 const usersValidation = (req, res, next) => {
-  const conditions = Joi.object({
-    _id: Joi.string().required(),
-    fullName: Joi.string().min(3).max(200).required(),
-    email: Joi.string().min(3).max(200).required(),
-    couples: Joi.array(),
+  const conditions = joi.object({
+    _id: joi.string().required(),
+    fullName: joi.string().min(3).max(200).required(),
+    email: joi.string().min(3).max(200).required(),
+    couples: joi.array(),
   });
   const validationUsers = conditions.validate(req.body);
   if (validationUsers.error) {

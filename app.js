@@ -6,14 +6,14 @@ const app = express();
 
 
 
-app.use(cors());
 app.use(express.json());
-app.use(Router);
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
     });
+app.use(Router);
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Mati server');

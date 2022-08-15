@@ -1,6 +1,5 @@
 import express from 'express';
 import usersController from '../controllers/users.js';
-import usersValidation from '../validations/users.js';
 
 const router = express.Router();
 
@@ -9,8 +8,8 @@ router
     .get('/', usersController.getAllUsers)
     .get('/:id', usersController.getUser)
     .get('/email/:email', usersController.findUserByEmail)
-    .post('/', usersValidation.usersValidation, usersController.createUser)
-    .put('/:id', usersValidation.usersValidation, usersController.editUser )
+    .post('/', usersController.createUser)
+    .put('/:id', usersController.editUser )
     .patch('/:id', usersController.addCouple)
     .delete('/:id', usersController.deleteUser)
     .delete('/couples/:id', usersController.deleteCouple);

@@ -1,6 +1,6 @@
 import express from 'express';
 import coupleController from '../controllers/couple.js';
-import coupleValidation from '../validations/couple.js';
+// import coupleValidation from '../validations/couple.js';
 
 const router = express.Router();
 
@@ -8,8 +8,8 @@ const router = express.Router();
 router
     .get('/:user', coupleController.getCouples)
     .get('/byId/:id', coupleController.findCouple)
-    .post('/', coupleValidation.coupleValidation, coupleController.createCouple)
-    .put('/:id', coupleValidation.coupleValidation, coupleController.editCouple)
+    .post('/', coupleController.createCouple)
+    .put('/:id', coupleController.editCouple)
     .patch('/:id', coupleController.pushExpense)
     .delete('/expense/:id', coupleController.pullExpense)
     .delete('/:id', coupleController.deleteCouple)

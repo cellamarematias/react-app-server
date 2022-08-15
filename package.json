@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index",
+    "start": "nodemon --exec babel-node -- index.js",
     "dev": "nodemon index"
   },
   "keywords": [],
@@ -21,6 +21,8 @@
     "mongoose": "^6.5.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/node": "^7.18.10",
     "nodemon": "^2.0.19",
     "webpack": "^5.74.0"
   }

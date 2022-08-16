@@ -4,7 +4,8 @@ const getexpenses = async (req, res) => {
   const { couple } = req.params;
   try {
     const expenses = await Expenses.find({ "coupleId": couple })
-      .populate('userId');
+      .sort({ date: -1 })
+      .populate('userId')
     return res.status(200).json({
       message: 'Request Successful. All expenses.',
       data: expenses,
@@ -57,6 +58,7 @@ const createexpense = async (req, res) => {
     });
     const saveexpense = await newexpense.save();
     const data = await Expenses.findById(saveexpense._id)
+      .sort('-date')
       .populate('userId');
     console.log(data);
     return res.status(201).json({
@@ -77,6 +79,7 @@ const editexpense = async (req, res) => {
   const { id } = req.params;
   try {
     const editedexpense = await Expenses.findByIdAndUpdate(id, req.body, { new: true })
+      .sort({ date: -1 })
       .populate('userId')
     if (editedexpense) {
       return res.status(200).json({

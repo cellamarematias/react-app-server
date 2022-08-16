@@ -4,7 +4,7 @@ const getexpenses = async (req, res) => {
   const { couple } = req.params;
   try {
     const expenses = await Expenses.find({ "coupleId": couple })
-      .sort({ date: -1 })
+      .sort({date: 'desc'})
       .populate('userId')
     return res.status(200).json({
       message: 'Request Successful. All expenses.',

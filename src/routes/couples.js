@@ -1,14 +1,16 @@
 import express from 'express';
 import coupleController from '../controllers/couple.js';
 // import coupleValidation from '../validations/couple.js';
+import authorized from '../middleware/auth.js';
+
 
 const router = express.Router();
 
 // set the endpoints
 router
-    .get('/:user', coupleController.getCouples)
-    .get('/byId/:id', coupleController.findCouple)
-    .post('/', coupleController.createCouple)
+    .get('/:user', authorized, coupleController.getCouples)
+    .get('/byId/:id', authorized, coupleController.findCouple)
+    .post('/', authorized, coupleController.createCouple)
     .put('/:id', coupleController.editCouple)
     .patch('/:id', coupleController.pushExpense)
     .delete('/expense/:id', coupleController.pullExpense)

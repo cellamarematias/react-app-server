@@ -1,11 +1,12 @@
 import express from 'express';
 import usersController from '../controllers/users.js';
+import authorized from '../middleware/auth.js';
 
 const router = express.Router();
 
 // set the endpoints
 router
-    .get('/', usersController.getAllUsers)
+    .get('/', authorized, usersController.getAllUsers)
     .get('/:id', usersController.getUser)
     .get('/email/:email', usersController.findUserByEmail)
     .post('/', usersController.createUser)

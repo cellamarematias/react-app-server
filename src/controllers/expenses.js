@@ -6,6 +6,7 @@ const getexpenses = async (req, res) => {
     const expenses = await Expenses.find({ "coupleId": couple })
       .sort({date: 'desc'})
       .populate('userId')
+      .limit(10)
     return res.status(200).json({
       message: 'Request Successful. All expenses.',
       data: expenses,
